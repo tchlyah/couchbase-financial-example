@@ -1,0 +1,60 @@
+name: customer
+type: object
+key:
+  type: string
+  data:
+    build: `${this.type}_${this.id}`
+
+properties:
+
+  id:
+    type: string
+    data:
+      build: faker.random.uuid()
+
+  type:
+    type: string
+    description: The document type
+    data:
+      value: customer
+
+  firstName:
+    description: The customers first name
+    data:
+      fake: '{{name.firstName}}'
+
+  lastName:
+    description: The customers last name
+    data:
+      fake: '{{name.lastName}}'
+
+  email:
+    description: The customers email address
+    data:
+      build: faker.internet.email(this.firstName, this.lastName)
+
+  phone:
+    description: The customers mobile phone
+    data:
+      fake: '{{phone.phoneNumber}}'
+      post_build: this.phone.replace(/x[0-9]+$/, '')
+
+  addresses:
+    description: The customers addresses
+    type: array
+    items:
+      type: object
+      data:
+        min: 1
+        max: 3
+      properties:
+        name:
+          type: string
+          data:
+            build: faker.random.arrayElement(["home", "work", "secondary"])
+        address:
+          type: string
+          data:
+            fake: '{{address.streetAddress}}, {{address.zipCode}} {{address.city}}, {{address.country}}'
+
+

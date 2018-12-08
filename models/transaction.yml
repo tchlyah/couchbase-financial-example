@@ -1,0 +1,67 @@
+name: transaction
+type: object
+key:
+  type: string
+  data:
+    build: `${this.type}_${this.id}`
+data:
+  dependencies:
+  - account.yml
+
+properties:
+
+  id:
+    type: string
+    data:
+      build: faker.random.uuid()
+
+  type:
+    type: string
+    description: The document type
+    data:
+      value: transaction
+
+  account:
+    type: string
+    data:
+      build: faker.random.arrayElement(documents.account).id
+
+  transactionType:
+    type: string
+    data:
+      fake: '{{finance.transactionType}}'
+
+  amount:
+    type: double
+    description: The transactions amount
+    data:
+      fake: '{{commerce.price}}'
+
+  currency:
+    type: string
+    description: transaction currency code
+    data:
+      fake: '{{finance.currencyCode}}'
+
+  counterparty:
+    type: string
+    data:
+      fake: '{{company.companyName}}'
+
+  description:
+    type: string
+    data:
+      fake: '{{commerce.productName}}'
+
+  status:
+    type: string
+    data:
+      build: faker.random.arrayElement(["success", "failed", "canceled"])
+
+  date:
+    type: long
+    description: An epoch time of when the transaction accured
+    data:
+      build: new Date(faker.date.past()).getTime()
+
+

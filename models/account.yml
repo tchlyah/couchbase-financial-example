@@ -1,0 +1,42 @@
+name: account
+type: object
+key:
+  type: string
+  data:
+    build: `${this.type}_${this.id}`
+
+data:
+  dependencies:
+    - customer.yml
+
+properties:
+
+  id:
+    type: string
+    data:
+      fake: '{{finance.account}}'
+  
+  type:
+    type: string
+    description: The document type
+    data:
+      value: account
+  
+  name:
+    type: string
+    description: The accounts name
+    data:
+      fake: '{{finance.accountName}}'
+  
+  amount:
+    type: double
+    description: The accounts amount
+    data:
+      fake: '{{finance.amount}}'
+  
+  customer:
+    type: string
+    data:
+      build: faker.random.arrayElement(documents.customer).id
+
+

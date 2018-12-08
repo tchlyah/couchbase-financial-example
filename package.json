@@ -1,0 +1,21 @@
+{
+  "name": "couchbase-financial-example",
+  "version": "0.0.1",
+  "description": "Description for gateway",
+  "private": true,
+  "license": "UNLICENSED",
+  "cacheDirectories": [
+    "node_modules"
+  ],
+  "dependencies": {
+    "fakeit": "^1.4.0"
+  },
+  "scripts": {
+    "clean": "rimraf target/{aot,www}",
+    "start": "fakeit couchbase --server localhost --bucket finance --password password -c 10000 -v models/*",
+    "test": "fakeit console models/*"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.2"
+  }
+}
