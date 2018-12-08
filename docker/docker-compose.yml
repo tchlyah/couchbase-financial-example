@@ -2,8 +2,7 @@ version: '2'
 services:
     couchbase:
         build:
-            context: .
-            dockerfile: couchbase/Couchbase.Dockerfile
+            context: couchbase
         ports:
             - 8091:8091
             - 8092:8092
@@ -13,3 +12,14 @@ services:
             - BUCKET=finance
 #        volumes:
 #            - ~/volumes/jhipster/jhipster/couchbase/:/opt/couchbase/var
+    fakeit:
+        build:
+            context: fakeit
+        environment:
+            - HOST=couchbase
+            - BUCKET=finance
+            - PASSWORD=password
+            - TIMEOUT=10000
+            - COUNT=10000
+        volumes:
+            - ../models:/data

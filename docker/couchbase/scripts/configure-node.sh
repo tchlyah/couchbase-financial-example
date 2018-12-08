@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -x
 set -m
 
 /entrypoint.sh couchbase-server &
