@@ -11,7 +11,7 @@ services:
         environment:
             - BUCKET=finance
 #        volumes:
-#            - ~/volumes/jhipster/jhipster/couchbase/:/opt/couchbase/var
+#            - ./couchbase/volume:/opt/couchbase/var
     fakeit:
         build:
             context: fakeit
@@ -23,3 +23,12 @@ services:
             - COUNT=10000
         volumes:
             - ../models:/data
+
+    application:
+        image: couchbase-finance-example
+        environment:
+            - SPRING_COUCHBASE_BOOTSTRAP-HOSTS=couchbase
+            - SPRING_COUCHBASE_BUCKET_NAME=finance
+            - SLEEP=30
+        ports:
+            - 8080:8080
