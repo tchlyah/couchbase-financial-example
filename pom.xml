@@ -28,6 +28,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-couchbase</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.github.differentway</groupId>
+			<artifactId>couchmove</artifactId>
+			<version>1.0.2</version>
+		</dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>

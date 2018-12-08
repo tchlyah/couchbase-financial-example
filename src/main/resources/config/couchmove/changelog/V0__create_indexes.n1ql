@@ -1,0 +1,13 @@
+-- customer addresses
+CREATE INDEX customer_address
+  ON `${bucket}`(DISTINCT ARRAY address.address FOR address IN addresses END, addresses)
+  WHERE type = 'customer'
+  WITH { "defer_build" : true };
+
+-- transaction dates
+CREATE INDEX transaction_date ON `${bucket}`(date)
+  WHERE type = 'transaction'
+  WITH { "defer_build" : true };
+
+-- build indexes asynchronously
+BUILD INDEX ON `${bucket}`(customer_address, transaction_date);
