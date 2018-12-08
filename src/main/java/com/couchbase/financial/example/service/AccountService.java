@@ -31,6 +31,16 @@ public class AccountService extends AbstractFinancialService<Account> {
 
     @Override
     public Optional<Account> findById(String id) {
-        return super.findById(id);
+        return super.findById(id)
+                .map(this::populateCustomer);
+    }
+
+    private Account populateCustomer(@Nonnull Account account) {
+        Optional.ofNullable(account.getCustomerId())
+                .map(customerService::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .ifPresent(account::setCustomer);
+        return account;
     }
 }

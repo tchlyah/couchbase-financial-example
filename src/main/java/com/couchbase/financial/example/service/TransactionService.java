@@ -35,6 +35,16 @@ public class TransactionService extends AbstractFinancialService<Transaction> {
 
     @Override
     public Optional<Transaction> findById(String id) {
-        return super.findById(id);
+        return super.findById(id)
+                .map(this::populateAccount);
+    }
+
+    private Transaction populateAccount(@Nonnull Transaction transaction) {
+        Optional.ofNullable(transaction.getAccountId())
+                .map(accountService::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .ifPresent(transaction::setAccount);
+        return transaction;
     }
 }
