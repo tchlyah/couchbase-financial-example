@@ -47,4 +47,16 @@ public class TransactionService extends AbstractFinancialService<Transaction> {
                 .ifPresent(transaction::setAccount);
         return transaction;
     }
+
+    public Collection<Transaction> findByDates(Instant fromDate, Instant toDate) {
+        return getCouchbaseRepository().query(
+                "SELECT `transaction`.* FROM `${bucket}` `transaction`" +
+                        " WHERE type = 'transaction'" +
+                        " and date > $from" +
+                        " and date < $to",
+                of(
+                        "from", fromDate.toEpochMilli(),
+                        "to", toDate.toEpochMilli())
+        );
+    }
 }

@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.util.Collection;
+
 /**
  * @author tayebchlyah
  * created on 08/12/2018
@@ -25,5 +28,12 @@ public class TransactionResource {
         log.info("Request to get transaction by id : {}", id);
 
         return ResponseUtil.wrapOrNotFound(service.findById(id));
+    }
+
+    @GetMapping(params = {"fromDate", "toDate"})
+    public Collection<Transaction> getByDates(
+            @RequestParam(value = "fromDate") Instant fromDate,
+            @RequestParam(value = "toDate") Instant toDate) {
+        return service.findByDates(fromDate, toDate);
     }
 }
