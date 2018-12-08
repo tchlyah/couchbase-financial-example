@@ -21,7 +21,7 @@ properties:
     data:
       value: transaction
 
-  account:
+  accountId:
     type: string
     data:
       build: faker.random.arrayElement(documents.account).id
@@ -56,7 +56,7 @@ properties:
   status:
     type: string
     data:
-      build: faker.random.arrayElement(["success", "failed", "canceled"])
+      build: faker.random.arrayElement(["SUCCESS", "FAILED", "CANCELED"])
 
   date:
     type: long

@@ -34,7 +34,7 @@ properties:
     data:
       fake: '{{finance.amount}}'
   
-  customer:
+  customerId:
     type: string
     data:
       build: faker.random.arrayElement(documents.customer).id
