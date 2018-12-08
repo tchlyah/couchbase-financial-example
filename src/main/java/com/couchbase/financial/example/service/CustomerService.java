@@ -25,4 +25,14 @@ public class CustomerService extends AbstractFinancialService<Customer> {
     protected String getPrefix() {
         return PREFIX;
     }
+
+    public Collection<Customer> findByAddress(String address) {
+        return getCouchbaseRepository().query(
+                "SELECT customer.* FROM ${bucket} customer" +
+                        " WHERE type = 'customer'" +
+                        " AND ANY address in addresses" +
+                        "   SATISFIES CONTAINS(address.address, $address)" +
+                        " END",
+                Collections.singletonMap("address", address));
+    }
 }

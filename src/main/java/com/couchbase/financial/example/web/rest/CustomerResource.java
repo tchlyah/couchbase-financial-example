@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 /**
  * @author tayebchlyah
  * created on 08/12/2018
@@ -25,5 +27,12 @@ public class CustomerResource {
         log.info("Request to get customer by id : {}", id);
 
         return ResponseUtil.wrapOrNotFound(service.findById(id));
+    }
+
+
+    @GetMapping(params = {"address"})
+    public Collection<Customer> getByAddress(
+            @RequestParam(value = "address") String address) {
+        return service.findByAddress(address);
     }
 }
