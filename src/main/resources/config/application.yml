@@ -9,3 +9,8 @@ spring:
     bucket:
       name: finance
       password: password
+
+application:
+  query:
+    findCustomersByAddress: "SELECT customer.* FROM ${bucket} customer WHERE type = 'customer'\n  AND ANY address in addresses\n         SATISFIES CONTAINS(address.address, $address)\n      END"
+    findTransactionsByDates: "SELECT `transaction`.* FROM `${bucket}` `transaction`\n  WHERE type = 'transaction'\n    AND date > $from\n AND date < $to"

@@ -1,6 +1,7 @@
 package com.couchbase.financial.example.service;
 
 import com.couchbase.client.java.Bucket;
+import com.couchbase.financial.example.config.ApplicationProperties;
 import com.couchbase.financial.example.domain.Customer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,11 @@ public class CustomerService extends AbstractFinancialService<Customer> {
 
     public static final String PREFIX = "customer";
 
-    public CustomerService(Bucket bucket, ObjectMapper objectMapper) {
+    private final ApplicationProperties properties;
+
+    public CustomerService(Bucket bucket, ObjectMapper objectMapper, ApplicationProperties properties) {
         super(objectMapper, bucket, Customer.class);
+        this.properties = properties;
     }
 
     @Override
@@ -27,12 +31,7 @@ public class CustomerService extends AbstractFinancialService<Customer> {
     }
 
     public Collection<Customer> findByAddress(String address) {
-        return getCouchbaseRepository().query(
-                "SELECT customer.* FROM ${bucket} customer" +
-                        " WHERE type = 'customer'" +
-                        " AND ANY address in addresses" +
-                        "   SATISFIES CONTAINS(address.address, $address)" +
-                        " END",
+        return getCouchbaseRepository().query(properties.getQuery().getFindCustomersByAddress(),
                 Collections.singletonMap("address", address));
     }
 }

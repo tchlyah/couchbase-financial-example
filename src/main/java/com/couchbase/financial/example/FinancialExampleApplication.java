@@ -1,14 +1,17 @@
 package com.couchbase.financial.example;
 
+import com.couchbase.financial.example.config.ApplicationProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+@EnableConfigurationProperties(ApplicationProperties.class)
 @SpringBootApplication
 @Slf4j
 public class FinancialExampleApplication {

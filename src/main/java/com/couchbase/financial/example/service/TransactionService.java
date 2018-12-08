@@ -1,6 +1,7 @@
 package com.couchbase.financial.example.service;
 
 import com.couchbase.client.java.Bucket;
+import com.couchbase.financial.example.config.ApplicationProperties;
 import com.couchbase.financial.example.domain.Transaction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,12 @@ public class TransactionService extends AbstractFinancialService<Transaction> {
 
     private final AccountService accountService;
 
-    public TransactionService(Bucket bucket, ObjectMapper objectMapper, AccountService accountService) {
+    private final ApplicationProperties properties;
+
+    public TransactionService(Bucket bucket, ObjectMapper objectMapper, AccountService accountService, ApplicationProperties properties) {
         super(objectMapper, bucket, Transaction.class);
         this.accountService = accountService;
+        this.properties = properties;
     }
 
     @Override
@@ -50,10 +54,7 @@ public class TransactionService extends AbstractFinancialService<Transaction> {
 
     public Collection<Transaction> findByDates(Instant fromDate, Instant toDate) {
         return getCouchbaseRepository().query(
-                "SELECT `transaction`.* FROM `${bucket}` `transaction`" +
-                        " WHERE type = 'transaction'" +
-                        " and date > $from" +
-                        " and date < $to",
+                properties.getQuery().getFindTransactionsByDates(),
                 of(
                         "from", fromDate.toEpochMilli(),
                         "to", toDate.toEpochMilli())
