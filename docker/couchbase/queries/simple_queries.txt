@@ -1,0 +1,2 @@
+{"statement": "SELECT * FROM finance WHERE type = 'transaction' AND date > str_to_millis('2018-08-01') AND date < str_to_millis('2018-08-31')"}
+{"statement": "SELECT * FROM finance WHERE type = 'customer' AND ANY address in addresses SATISFIES CONTAINS(address.address, 'Western Sahara') END"}

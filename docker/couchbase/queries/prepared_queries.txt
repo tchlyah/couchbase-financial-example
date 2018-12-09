@@ -1,0 +1,2 @@
+{"prepared": "customer_address", "$address": "Western Sahara"}
+{"prepared": "transaction_date", "$from": 1533081600000, "$to": 1535673600000}

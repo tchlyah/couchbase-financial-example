@@ -1,0 +1,14 @@
+-- customer addresses
+PREPARE customer_address FROM
+SELECT * FROM `${bucket}`
+where type = 'customer'
+  AND ANY address in addresses
+         SATISFIES CONTAINS(address.address, $address)
+      END;
+
+-- transaction dates
+PREPARE transaction_date FROM
+SELECT * FROM `${bucket}`
+  WHERE type = 'transaction'
+    AND date > $from
+    AND date < $to;
